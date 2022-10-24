@@ -1,16 +1,11 @@
 import {useContext, useState, useEffect} from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import {useFormik, Formik, Form, Field, ErrorMessage } from "formik";
+import {  useNavigate } from "react-router-dom";
+import {Formik, Form, Field, ErrorMessage } from "formik";
 import AuthContext from "../context/AuthContext";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 
 interface MyFormValues {
   user: string;
   password: string;
-}
-interface MyFormProps {
-  user: (user: string) => void | string;
-  
 }
 
 function getFormValues() {
@@ -29,11 +24,6 @@ const EmployeeForm: React.FC<{}> = () => {
   const navigate = useNavigate();
   const authcontext = useContext(AuthContext);
  
-
-const win = window.sessionStorage
-
-
-
   const onSubmit = (values: MyFormValues, actions: any) => {
     if (values.user === "admin" && values.password === "admin") {
       authcontext?.setLoggedIn(true);
@@ -47,14 +37,7 @@ const win = window.sessionStorage
   useEffect(() => {
 		localStorage.setItem('form', JSON.stringify(values));
 	}, [values]);
-
-
-  function handleChange (e: any) {
-    setValues((previousValues) => ({
-			...previousValues,
-			[e.target.name]: e.target.value,
-		}));
-  }
+ 
 
   function validateUser(value: any) {
     let error;
@@ -91,6 +74,7 @@ const win = window.sessionStorage
               className="form-control mb-1  "
               onPaste={onPaste}
               onCopy={onCopy}
+              validate={validateUser}
             />
             <div className="text-danger fst-italic">
               <ErrorMessage name="user" />
@@ -108,6 +92,7 @@ const win = window.sessionStorage
               className="form-control mb-1  "
               onPaste={onPaste}
               onCopy={onCopy}
+              validate={validatePassword}
 
             />
             <div className="text-danger fst-italic">

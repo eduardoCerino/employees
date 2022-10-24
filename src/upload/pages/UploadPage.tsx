@@ -1,7 +1,5 @@
 import React, { useRef, useState } from "react";
 import "./upload.css"
-import { Field, Formik, Form } from 'formik';
-import { useNavigate } from 'react-router-dom';
 
 const UploadPage = () => {
   const [picture, setPicture] = useState<any>([]);
@@ -27,6 +25,8 @@ const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setPicture([]);
     setActive(false);
+    localStorage.setValues('user', JSON.stringify( values ) );
+
 
   };
   const inputRef = useRef<HTMLInputElement>(null);
@@ -34,7 +34,6 @@ const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
   const resetFileInput = () => {
     inputRef.current!.value = "";
   };
-const navigate = useNavigate();
 
 
 return (
